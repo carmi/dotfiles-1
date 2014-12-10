@@ -9,11 +9,38 @@
 [credential]
         helper = GIT_CREDENTIAL_HELPER
 [alias]
-        co = checkout
         promote = !$ZSH/bin/git-promote
         wtf     = !$ZSH/bin/git-wtf
         rank-contributors = !$ZSH/bin/git-rank-contributors
         count   = !git shortlog -sn
+        br = branch
+        ci = commit
+        co = checkout
+        d = diff --color
+        dc = diff --cached
+        df = diff --color
+        dfc = diff --color --cached
+        dfno = diff --color --name-only
+        fu = fetch upstream
+        lg = log --color
+        ll = log --color --pretty=oneline
+        llb = log --color --decorate --pretty=oneline
+        lol = log --graph --color --decorate --pretty=oneline --abbrev-commit
+        lola = log --graph --color --decorate --pretty=oneline --abbrev-commit --all
+        ls = ls-files
+        ph = push origin HEAD
+        #pullr = pull --rebase
+        sh = show --color
+        st = status
+        edit-unmerged = \
+          "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+        add-unmerged = \
+          "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+        # Show files ignored by git:
+        ign = ls-files -o -i --exclude-standard
+        remove-merged-branches = \
+          "!git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d"
+        up = "!git remote update -p; git merge --ff-only @{u}"
 [color]
         diff = auto
         status = auto
