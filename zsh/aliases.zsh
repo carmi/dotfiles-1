@@ -1,3 +1,2 @@
 alias reload!='. ~/.zshrc'
-
-function fname() { find . -iname "*$@*"; }
+alias s='git status'
