@@ -4,12 +4,15 @@
 
 "Use Vundle for managing plugings
 
-set rtp+=~/.vim/bundle/vundle/
+set nocompatible
+filetype off  " required!
+
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 
 " let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
+" required!
+Bundle 'gmarik/Vundle.vim'
 
 " My Bundles here:
 "
@@ -51,18 +54,16 @@ let g:Powerline_symbols = 'fancy'
 
 Bundle 'kana/vim-fakeclip'
 
-
 Bundle 'kien/ctrlp.vim'
 
 "Bundle "tpope/vim-markdown"
-Bundle "puppetlabs/puppet-syntax-vim"
 
 "Bundle "scrooloose/nerdtree"
 Bundle "scrooloose/syntastic"
 
 Bundle "nelstrom/vim-qargs"
 
-Bundle 'thoughtbot/vim-rspec'
+"Bundle 'thoughtbot/vim-rspec'
 Bundle 'tpope/vim-dispatch'
 " Rspec.vim mappings
 map <Leader>r :call RunCurrentSpecFile()<CR>
@@ -72,6 +73,11 @@ map <Leader>ra :call RunAllSpecs()<CR>
 let g:rspec_command = "Dispatch rspec {spec}"
 
 map <Leader>a :AgFromSearch<CR>
+
+"Syntax files
+Bundle 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
+Bundle "puppetlabs/puppet-syntax-vim"
+Bundle "haproxy"
 
 "----------------------
 "Use system find command"
@@ -512,7 +518,7 @@ map <leader>ss :setlocal spell!<cr>
 map <leader>sn ]s
 map <leader>sp [s
 map <leader>sa zg
-map <leader>s? z=
+map <leader>s 1z=
 
 
 " ====== Python section ====={{{1
