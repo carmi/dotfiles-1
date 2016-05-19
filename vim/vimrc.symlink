@@ -7,18 +7,13 @@
 set nocompatible
 filetype off  " required!
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#rc()
-
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
 " My Bundles here:
 "
 " original repos on github
 
-Bundle 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'
 "-------------------------------
 " change the default EasyMotion shading to something more readable with
 " Solarized
@@ -26,45 +21,56 @@ hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
 
 
-Bundle 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 let g:solarized_termcolors=256
 
-Bundle 'tpope/vim-rails.git'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-fugitive'
-Bundle 'sjl/gundo.vim'
-Bundle 'vim-scripts/ruby-matchit'
-Bundle 'airblade/vim-gitgutter.git'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'sjl/gundo.vim'
+Plug 'vim-scripts/ruby-matchit'
+Plug 'airblade/vim-gitgutter'
 
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'mustache/vim-mustache-handlebars'
-" Bundle 'mikewest/vimroom'
+Plug 'evanmiller/nginx-vim-syntax'
+
+Plug 'kchmck/vim-coffee-script'
+Plug 'mustache/vim-mustache-handlebars'
+" Plug 'mikewest/vimroom'
+Plug 'tpope/vim-repeat'
+
+Plug 'pearofducks/ansible-vim'
+
+set shell=/bin/bash
 
 nnoremap <F5> :GundoToggle<CR>
 
-Bundle 'https://github.com/Lokaltog/powerline'
+Plug 'https://github.com/Lokaltog/powerline'
 " Powerline configuration
 set laststatus=2   " Always show the statusline
 set encoding=utf-8 " Necessary to show Unicode glyphs
 let g:Powerline_symbols = 'fancy'
 
-"Bundle 'nathanaelkane/vim-indent-guides'
+"Plug 'nathanaelkane/vim-indent-guides'
 "let g:indent_guides_guide_size=1
 
 
-Bundle 'kana/vim-fakeclip'
+Plug 'kana/vim-fakeclip'
 
-Bundle 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
-"Bundle "tpope/vim-markdown"
+"Plug 'tpope/vim-markdown'
 
-"Bundle "scrooloose/nerdtree"
-Bundle "scrooloose/syntastic"
+Plug 'scrooloose/syntastic'
 
-Bundle "nelstrom/vim-qargs"
 
-"Bundle 'thoughtbot/vim-rspec'
-Bundle 'tpope/vim-dispatch'
+let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+let g:syntastic_haml_checkers = ['haml_lint']
+
+Plug 'nelstrom/vim-qargs'
+
+"Plug 'thoughtbot/vim-rspec'
+Plug 'tpope/vim-dispatch'
+
 " Rspec.vim mappings
 map <Leader>r :call RunCurrentSpecFile()<CR>
 map <Leader>rn :call RunNearestSpec()<CR>
@@ -75,9 +81,9 @@ let g:rspec_command = "Dispatch rspec {spec}"
 map <Leader>a :AgFromSearch<CR>
 
 "Syntax files
-Bundle 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
-Bundle "puppetlabs/puppet-syntax-vim"
-Bundle "haproxy"
+Plug 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
+Plug 'puppetlabs/puppet-syntax-vim'
+Plug 'haproxy'
 
 "----------------------
 "Use system find command"
@@ -87,33 +93,24 @@ let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
 "let g:ctrlp_user_command = 'find %s -type f'
 
 " Set the max files
-let g:ctrlp_max_files = 10000
+"let g:ctrlp_max_files = 10000
 
 " Optimize file searching
-if has("unix")
-    let g:ctrlp_user_command = {
-                \   'types': {
-                \       1: ['.git/', 'cd %s && git ls-files']
-                \   },
-                \   'fallback': 'find %s -type f | head -' . g:ctrlp_max_files
-                \ }
-endif
+"if has("unix")
+"    let g:ctrlp_user_command = {
+"                \   'types': {
+"                \       1: ['.git/', 'cd %s && git ls-files']
+"                \   },
+"                \   'fallback': 'find %s -type f | head -' . g:ctrlp_max_files
+"                \ }
+"endif
 
 
 " vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
+Plug 'L9'
+Plug 'FuzzyFinder'
 
 filetype plugin indent on     " required!
-"
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
 
 "
 " ====== General ===== {{{1
@@ -205,6 +202,10 @@ set magic "Set magic on, for regular expressions
 set showmatch "Show matching bracets when text indicator is over them
 set mat=2 "How many tenths of a second to blink
 
+set softtabstop=2
+set tabstop=2
+set shiftwidth=2
+
 " No sound on errors
 set noerrorbells
 set novisualbell
@@ -240,8 +241,6 @@ else
   let g:solarized_visibility = "high"
   let g:solarized_contrast = "high"
 endif
-
-colorscheme solarized
 
 set encoding=utf8
 try
@@ -281,11 +280,11 @@ set smartindent "Smart indet
 set wrap "Wrap lines
 
 "Handle python comment indentation - http://stackoverflow.com/questions/2360249/vim-automatically-removes-indentation-on-python-comments
-inoremap # X#
-
-map <leader>t2 :setlocal shiftwidth=2<cr>
-map <leader>t4 :setlocal shiftwidth=4<cr>
-map <leader>t8 :setlocal shiftwidth=4<cr>
+" inoremap # X#
+" 
+" map <leader>t2 :setlocal shiftwidth=2<cr>
+" map <leader>t4 :setlocal shiftwidth=4<cr>
+" map <leader>t8 :setlocal shiftwidth=4<cr>
 
 
 " ====== Visual mode related ====={{{1
@@ -433,11 +432,6 @@ set laststatus=2
 " Format the statusline
 set statusline=%<%f\ %h%w%m%r%y%=B:%o\ F:%{foldlevel('.')}\ L:%l/%L\ (%p%%)\ C:%c%V\ 
 
-function! CurDir()
-    let curdir = substitute(getcwd(), '/Users/amir/', "~/", "g")
-    return curdir
-endfunction
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Parenthesis/bracket expanding
@@ -500,13 +494,13 @@ let g:bufExplorerSortBy = "name"
 
 " ====== Omni complete functions ====={{{1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+"autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+"autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+"autocmd FileType c set omnifunc=ccomplete#Complete
 
 
 " ====== Spell checking ====={{{1
@@ -526,23 +520,13 @@ map <leader>s 1z=
 
 set suffixes+=.pyc,.pyo "ignore compiled Python files
 
-au FileType python set nocindent
+"au FileType python set nocindent
 au FileType python set tw=79 "Reminder of PEP8
 let python_highlight_all = 1
 au FileType python syn keyword pythonDecorator True None False self
 
 au BufNewFile,BufRead *.jinja set syntax=htmljinja
 au BufNewFile,BufRead *.mako set ft=mako
-
-au FileType python inoremap <buffer> $r return 
-au FileType python inoremap <buffer> $i import 
-au FileType python inoremap <buffer> $p print 
-au FileType python inoremap <buffer> $f #--- PH ----------------------------------------------<esc>FP2xi
-au FileType python map <buffer> <leader>1 /class 
-au FileType python map <buffer> <leader>2 /def 
-au FileType python map <buffer> <leader>C ?class 
-au FileType python map <buffer> <leader>D ?def 
-
 
 " ====== Vim grep ====={{{1
 """"""""""""""""""""""""""""""
@@ -628,7 +612,7 @@ set guitablabel=%{GuiTabLabel()}
 
 
 iabbrev rdb    require 'ruby-debug'; Debugger.start; Debugger.settings[:autoeval] = 1; Debugger.settings[:autolist] = 1; debugger
-iabbrev pry    binding.pry<Esc>g0dw$
+iabbrev pry!    binding.pry<Esc>g0dw$
 iabbrev rdebug    require 'ruby-debug'; Debugger.start; Debugger.settings[:autoeval] = 1; Debugger.settings[:autolist] = 1; debugger
 iabbrev pdb    import pdb; pdb.set_trace()
 
@@ -637,6 +621,7 @@ iabbrev pdb    import pdb; pdb.set_trace()
 autocmd FileType ruby map <leader>c :w<CR>:!ruby -c %<CR>
 
 autocmd BufWinEnter *.rabl set ft=ruby
+autocmd BufWinEnter Gemfile set ft=ruby
 
 " CtrlP
 "Add keymappings
@@ -672,7 +657,9 @@ map <leader>, :make<cr><cr><cr>
 cmap w!! w !sudo tee >/dev/null %
 
 set clipboard=unnamed
-Bundle 'rking/ag.vim'
+Plug 'rking/ag.vim'
+
+call plug#end()
 
 " Enable syntax highlighting when buffers were loaded through :bufdo, which
 " disables the Syntax autocmd event to speed up processing.
@@ -716,3 +703,10 @@ command! Code silent! iunmap <buffer> .|
             \ setlocal nospell list nowrap
             \     tw=74 fo=cqr1 showbreak=… nu|
             \ silent! autocmd! PROSE * <buffer>
+"Persistant Undo
+set undodir=~/.vim/undodir
+set undofile
+set undolevels=1000 "maximum number of changes that can be undone
+set undoreload=10000 "maximum number lines to save for undo on a buffer reload
+
+colorscheme solarized
